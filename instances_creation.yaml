@@ -1,0 +1,57 @@
+- name: create the AWS instances and add route53 records
+  hosts: local
+  connection: local
+  vars:
+    subnet_id: subnet-0c345c5eb167de064
+    ami: ami-09c813fb71547fc4f
+    sg: sg-01f4d819d2d330dce
+    instances:
+    - mysql
+    - backend
+    - frontend
+    zone: "sn2.online"
+  tasks:
+  - name: install boto3 and botocore packages
+    ansible.builtin.pip:
+      name: 
+      - boto3
+      - botocore
+      executable: 3.19
+  - name: create the EC2 instance
+    amazon.aws.ec2_instance:
+      name: "{{ item }}"
+      vpc_subnet_id: "{{ subnet_id }}"
+      instance_type: "t3.micro"
+      security_group: "{{ sg }}"
+      image_id: "{{ ami }}"     
+    loop: "{{ instances }}"
+    register: ec2_instance
+  
+  - name: print the ec2_instances
+    ansible.builtin.debug:
+      msg: "{{ ec2_instance }}" # it will return the 3 instances of detaisl in json format.
+  
+  - name: update the route53 records
+    amazon.aws.route53:
+      state: present
+      zone: "{{ zone }}"
+      record: "{{ item.item }}.{{ zone }}" #it will return the item name. from the list 
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].private_ip_address }}" # it will fetch the private ipaddress of the first item of the instance. 
+      wait: true  
+      overwrite: true
+    loop: "{{ ec2_instance.results }}"  
+
+  - name: update the route53 records for public IP
+    amazon.aws.route53:
+      state: present
+      zone: "{{ zone }}"
+      record: "{{ zone }}" #it will return the item name. from the list 
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].public_ip_address }}" # it will fetch the private ipaddress of the first item of the instance. 
+      wait: true  
+      overwrite: true
+    loop: "{{ ec2_instance.results }}"  
+    when: item.item == "frontend" # we are checking on the loop's item.
