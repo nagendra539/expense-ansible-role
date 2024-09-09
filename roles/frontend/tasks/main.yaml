@@ -34,8 +34,10 @@
   ansible.builtin.template:
     src: expense.conf.j2
     dest: /etc/nginx/default.d/expense.conf
-  notify: restart nginx
-# - name: restart the nginx server
+  notify:
+  - Restart nginx # whenever the task is notified, it will run the code in Handlers.
+
+# - name: restart the nginx server  
 #   ansible.builtin.service:
 #     name: nginx
 #     state: restarted 
