@@ -17,10 +17,12 @@
     name: expense
 
 - name: importing the tasks from the common role
+  tags:
+  - deployment
   ansible.builtin.import_role:
     name: common
     tasks_from: app_pre_req
-    
+
 # comment the code and added in common/tasks section
 # - name: create the directory if it not exists 
 #   ansible.builtin.file:
@@ -39,6 +41,8 @@
 #     remote_src: true
 
 - name: install the npm packages
+  tags:
+  - deployment
   ansible.builtin.command: npm install
   args:
     chdir: /app
@@ -65,6 +69,8 @@
     target: /app/schema/backend.sql
 
 - name: restart the backend service
+  tags:
+  - deployment
   ansible.builtin.service:
     name: backend
     state: restarted
