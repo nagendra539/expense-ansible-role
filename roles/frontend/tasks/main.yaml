@@ -35,7 +35,8 @@
     src: expense.conf.j2
     dest: /etc/nginx/default.d/expense.conf
   notify:
-  - Restart nginx # whenever the task is notified, it will run the code in Handlers.
+  - Restart nginx # whenever the task is notified, it will run the code in Handlers. it should match the task name exactly.
+  
 
 # - name: restart the nginx server  
 #   ansible.builtin.service:
