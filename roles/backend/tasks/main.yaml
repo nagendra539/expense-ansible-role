@@ -16,6 +16,11 @@
   ansible.builtin.user:
     name: expense
 
+- name: importing the tasks from the common role
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app_pre_req
+    
 # comment the code and added in common/tasks section
 # - name: create the directory if it not exists 
 #   ansible.builtin.file:
