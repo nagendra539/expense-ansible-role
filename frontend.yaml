@@ -1,0 +1,5 @@
+- name: setup the frontend server
+  become: yes
+  hosts: frontend.sn2.online
+  roles:
+  - frontend
