@@ -1,5 +1,5 @@
 - name: installing the mysql server and configure
   hosts: mysql
   become: yes
-  role:
+  roles:
   - mysql
