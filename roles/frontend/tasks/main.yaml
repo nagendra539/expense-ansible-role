@@ -8,6 +8,11 @@
     name: nginx
     state: restarted
     enabled: yes
+  
+- name: importing tasks from common role
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app_pre_req
 
 # comment the below code and added in common/tasks block.
 # - name: delete the default html files
