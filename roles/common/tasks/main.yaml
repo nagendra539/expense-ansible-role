@@ -1,0 +1,16 @@
+# delete the directory for idempotency
+- name: delete the directory
+  ansible.builtin.file:
+    path: "{{ app_location }}"
+    state: absent
+
+- name: create the directory if it not exists
+  ansible.builtin.file:
+    path: "{{ app_location }}"
+    state: directory
+
+- name: unzip the source code
+  ansible.builtin.unarchive:
+    src: "https://expense-builds.s3.us-east-1.amazonaws.com/expense-{{ host_name }}-v2.zip"
+    dest: "{{ app_location }}"
+    remote_src: true

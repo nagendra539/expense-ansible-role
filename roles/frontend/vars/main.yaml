@@ -1,1 +1,4 @@
 backend_host: backend.sn2.online
+
+app_location: /usr/share/nginx/html
+host_name: frontend

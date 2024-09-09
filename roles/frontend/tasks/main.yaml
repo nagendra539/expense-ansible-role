@@ -9,26 +9,27 @@
     state: restarted
     enabled: yes
 
-- name: delete the default html files
-  ansible.builtin.file:
-    path: /usr/share/nginx/html
-    state: absent
+# comment the below code and added in common/tasks block.
+# - name: delete the default html files
+#   ansible.builtin.file:
+#     path: /usr/share/nginx/html
+#     state: absent
 
-- name: create html directory
-  ansible.builtin.file:
-    path: /usr/share/nginx/html
-    state: directory
+# - name: create html directory
+#   ansible.builtin.file:
+#     path: /usr/share/nginx/html
+#     state: directory
   
-- name:  download the application code
-  ansible.builtin.get_url:
-    url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
-    dest: /tmp/frontend.zip
+# - name:  download the application code
+#   ansible.builtin.get_url:
+#     url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+#     dest: /tmp/frontend.zip
 
-- name: unzip the source code
-  ansible.builtin.unarchive:
-    src: /tmp/frontend.zip
-    dest: /usr/share/nginx/html
-    remote_src: true
+# - name: unzip the source code
+#   ansible.builtin.unarchive:
+#     src: /tmp/frontend.zip
+#     dest: /usr/share/nginx/html
+#     remote_src: true
 
 - name: copy the service file
   ansible.builtin.template:
@@ -36,7 +37,7 @@
     dest: /etc/nginx/default.d/expense.conf
   notify:
   - Restart nginx # whenever the task is notified, it will run the code in Handlers. it should match the task name exactly.
-  
+
 
 # - name: restart the nginx server  
 #   ansible.builtin.service:
