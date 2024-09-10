@@ -8,4 +8,4 @@
   hostname:
     - private-ip-address
   # ansible_host variable to connect to the EC2 private ip instances
-  ansible_host: private_ip_host
+  ansible_host: private_ip_address
