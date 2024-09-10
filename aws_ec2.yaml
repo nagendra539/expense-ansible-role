@@ -5,7 +5,8 @@
   filters:
     tag:Name: nginx
     instance-state-name: running
-  hostname:
-    - private-ip-address
+  hostnames:
+    - name: private-ip-address
   # ansible_host variable to connect to the EC2 private ip instances
+  # This sets the ansible_host variable to connect with the private IP address without changing the hostname.
   ansible_host: private_ip_address
