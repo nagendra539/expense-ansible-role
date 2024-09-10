@@ -1,6 +1,6 @@
 # dynamic inventory instances in aws
   plugin: amazon.aws.aws_ec2
-  region:
+  regions:
   - us-east-1
   filters:
     tag:Name: nginx
