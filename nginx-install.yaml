@@ -1,0 +1,14 @@
+- name: nginx install and start
+  hosts: all
+  serial: 2 #Package will install in 2 servers at a time. we can change the value, depends upon our ansible server capacity
+  become: yes
+  tasks:
+  - name: install nginx package
+    ansible.builtin.package:
+      name: nginx
+      state: present
+  - name: start the nginx package
+    ansible.builtin.service:
+      name: nginx
+      state: started
+      enabled: yes
