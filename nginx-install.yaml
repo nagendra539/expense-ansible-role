@@ -1,6 +1,8 @@
 - name: nginx install and start
   hosts: all
   serial: 2 #Package will install in 2 servers at a time. we can change the value, depends upon our ansible server capacity
+  # above command will complete the install in 2 servers completely and go ahead for next 2 instances.
+  # this is playbook level. 
   become: yes
   tasks:
   - name: install nginx package
